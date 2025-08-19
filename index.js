@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 const URL = require('./model/url');
+require("dotenv").config();
 
 
 const staticRouter = require('./routes/staticRouter');
@@ -13,13 +14,19 @@ const authrouter = require('./routes/auth');
 const app = express();
 const path = require('path');
 
-mongoose.connect('mongodb://127.0.0.1:27017/urlshortener')
-.then(()=>{
-    console.log('Connected to MongoDB');
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
-.catch((err)=>{
-    console.error('Error connecting to MongoDB:', err);
-});
+.then(() => console.log("✅ Connected to MongoDB Atlas"))
+.catch(err => console.error("❌ MongoDB connection error:", err));
+// mongoose.connect('mongodb://127.0.0.1:27017/urlshortener')
+// .then(()=>{
+//     console.log('Connected to MongoDB');
+// })
+// .catch((err)=>{
+//     console.error('Error connecting to MongoDB:', err);
+// });
 
 // Middleware
 app.use(express.json());
