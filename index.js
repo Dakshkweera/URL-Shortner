@@ -39,7 +39,6 @@ app.use('/users', authmiddleware, url);
 app.use('/',authmiddleware, staticRouter);
 
 
+const PORT = process.env.PORT || 8001;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
-app.listen(8001,()=>{
-    console.log('Server is running on port 8001');
-})
